@@ -13,7 +13,7 @@ export type GrupoTransacao = {
 
 
 export class Transacao  {
-    tipoTransacao: TipoTransacao = TipoTransacao.DEPOSITO;
+    tipoTransacao: TipoTransacao;
     valor: number = 0;
     data: Date = new Date();
 
@@ -59,15 +59,18 @@ export class Transacao  {
         this.tipoTransacao = tipoTransacao;
     }
 
-    constructor(){
-        this.tipoTransacao = TipoTransacao.DEPOSITO;
-        this.data = new Date();
-        this.valor = 0;
+    /*constructor(nome: string) {
+        this.titular = nome;
+    }*/
+   constructor(valor:number, data: Date, tipoTransacao: TipoTransacao){
+        this.valor = valor;
+        this.data = data;
+        this.tipoTransacao = tipoTransacao;
     }
 }
 
-const novaTransacao = new Transacao();
+//const novaTransacao = new Transacao();
 
-export default novaTransacao;
+//export default novaTransacao;
 
 

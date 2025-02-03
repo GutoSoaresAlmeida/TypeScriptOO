@@ -5,7 +5,7 @@ export var TipoTransacao;
     TipoTransacao["PAGAMENTO_BOLETO"] = "Pagamento de Boleto";
 })(TipoTransacao || (TipoTransacao = {}));
 export class Transacao {
-    tipoTransacao = TipoTransacao.DEPOSITO;
+    tipoTransacao;
     valor = 0;
     data = new Date();
     getTransacao() {
@@ -39,11 +39,14 @@ export class Transacao {
     setTipoTransacao(tipoTransacao) {
         this.tipoTransacao = tipoTransacao;
     }
-    constructor() {
-        this.tipoTransacao = TipoTransacao.DEPOSITO;
-        this.data = new Date();
-        this.valor = 0;
+    /*constructor(nome: string) {
+        this.titular = nome;
+    }*/
+    constructor(valor, data, tipoTransacao) {
+        this.valor = valor;
+        this.data = data;
+        this.tipoTransacao = tipoTransacao;
     }
 }
-const novaTransacao = new Transacao();
-export default novaTransacao;
+//const novaTransacao = new Transacao();
+//export default novaTransacao;

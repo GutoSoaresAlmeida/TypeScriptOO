@@ -1,7 +1,7 @@
 
 import { GrupoTransacao, Transacao } from "./Transacao.js";
 import { TipoTransacao } from "./Transacao.js";
-import novaTransacao from "./Transacao.js";
+
 
 export class Conta {
     titular: string
