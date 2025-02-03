@@ -1,4 +1,4 @@
-import novaTransacao from "../model/Transacao.js";
+import { Transacao } from "../model/Transacao.js";
 import SaldoComponent from "./saldo-component.js";
 import conta from "../model/Conta.js";
 import ExtratoComponent from "./extrato-component.js";
@@ -16,11 +16,7 @@ elementoFormulario.addEventListener("submit", function (event) {
         let tipoTransacao = inputTipoTransacao.value;
         let valor = inputValor.valueAsNumber;
         let data = new Date(inputData.value + " 00:00:00");
-        /*novaTransacao.setValorTransacao(valor);
-        novaTransacao.setData(data);
-        novaTransacao.setTipoTransacao(tipoTransacao);
-        */
-        novaTransacao.setTransacao(valor, data, tipoTransacao);
+        const novaTransacao = new Transacao(valor, data, tipoTransacao);
         conta.registrarTransacao(novaTransacao);
         SaldoComponent.atualizar();
         ExtratoComponent.atualizar();

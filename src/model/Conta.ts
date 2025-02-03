@@ -1,31 +1,42 @@
 
 import { GrupoTransacao, Transacao } from "./Transacao.js";
 import { TipoTransacao } from "./Transacao.js";
-import novaTransacao from "./Transacao.js";
+
 
 export class Conta {
-    nome: string
-    saldo: number = JSON.parse(localStorage.getItem("saldo")) || 0;
-    transacoes: Transacao[] = JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any) => {
-        if (key === "data") {
-            return new Date(value);
-        }
-        return value;
-    }) || [];
+    titular: string
+    dataAbertuda: Date;
+    dataEncerramento: Date;
+    saldo: number;
+    limite: number;
+    transacoes: Transacao[] = []; 
     
     constructor(nome: string) {
-        this.nome = nome;
+        this.titular = nome;
+        this.dataAbertuda = new Date();
+        this.limite = 0;
+        this.saldo = JSON.parse(localStorage.getItem("saldo")) || 0; 
+        this.transacoes = JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any) => {
+            if (key === "data") {
+                return new Date(value);
+            }
+            return value;
+        }) || [];
     }
-    
+
 
     getGruposTransacoes(): GrupoTransacao[] {
         const gruposTransacoes: GrupoTransacao[] = [];
-        const listaTransacoes: Transacao[] = structuredClone(this.transacoes);
-        const transacoesOrdenadas: Transacao[] = listaTransacoes.sort((t1, t2) => t2.data.getTime() - t1.data.getTime());
+        //const listaTransacoes2: Transacao[] = structuredClone(this.transacoes);
+        const listaTransacoes: Transacao[] = structuredClone(this.transacoes).map(
+            Transacao.fromJSON
+        );
+        console.log(listaTransacoes.map(t => t instanceof Transacao)); 
+        const transacoesOrdenadas: Transacao[] = listaTransacoes.sort((t1, t2) => t2.getData().getTime() - t1.getData().getTime());
         let labelAtualGrupoTransacao: string = "";
 
         for (let transacao of transacoesOrdenadas) {
-            let labelGrupoTransacao: string = transacao.data.toLocaleDateString("pt-br", { month: "long", year: "numeric" });
+            let labelGrupoTransacao: string = transacao.getData().toLocaleDateString("pt-br", { month: "long", year: "numeric" });
             if (labelAtualGrupoTransacao !== labelGrupoTransacao) {
                 labelAtualGrupoTransacao = labelGrupoTransacao;
                 gruposTransacoes.push({
@@ -41,7 +52,8 @@ export class Conta {
 
     getSaldo() 
     {
-       return this.saldo;
+        this.saldo = JSON.parse(localStorage.getItem("saldo")) || 0;
+        return this.saldo;
     }
 
 
@@ -50,12 +62,12 @@ export class Conta {
     }
 
     registrarTransacao(novaTransacao: Transacao): void {
-        if (novaTransacao.tipoTransacao == TipoTransacao.DEPOSITO) {
-            this.depositar(novaTransacao.valor);
+        if (novaTransacao.getTipoTransacao() == TipoTransacao.DEPOSITO) {
+            this.depositar(novaTransacao.getValorTransacao());
         } 
-        else if (novaTransacao.tipoTransacao == TipoTransacao.TRANSFERENCIA || novaTransacao.tipoTransacao == TipoTransacao.PAGAMENTO_BOLETO) {
-            this.debitar(novaTransacao.valor);
-            novaTransacao.valor *= -1;
+        else if (novaTransacao.getTipoTransacao() == TipoTransacao.TRANSFERENCIA || novaTransacao.getTipoTransacao() == TipoTransacao.PAGAMENTO_BOLETO) {
+            this.debitar(novaTransacao.getValorTransacao());
+            novaTransacao.setValorTransacao(novaTransacao.getValorTransacao() * -1);
         } 
         else {
             throw new Error("Tipo de Transação é inválido!");
