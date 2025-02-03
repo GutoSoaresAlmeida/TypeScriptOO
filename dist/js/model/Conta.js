@@ -1,3 +1,4 @@
+import { Transacao } from "./Transacao.js";
 import { TipoTransacao } from "./Transacao.js";
 export class Conta {
     titular;
@@ -20,11 +21,13 @@ export class Conta {
     }
     getGruposTransacoes() {
         const gruposTransacoes = [];
-        const listaTransacoes = structuredClone(this.transacoes);
-        const transacoesOrdenadas = listaTransacoes.sort((t1, t2) => t2.data.getTime() - t1.data.getTime());
+        //const listaTransacoes2: Transacao[] = structuredClone(this.transacoes);
+        const listaTransacoes = structuredClone(this.transacoes).map(Transacao.fromJSON);
+        console.log(listaTransacoes.map(t => t instanceof Transacao));
+        const transacoesOrdenadas = listaTransacoes.sort((t1, t2) => t2.getData().getTime() - t1.getData().getTime());
         let labelAtualGrupoTransacao = "";
         for (let transacao of transacoesOrdenadas) {
-            let labelGrupoTransacao = transacao.data.toLocaleDateString("pt-br", { month: "long", year: "numeric" });
+            let labelGrupoTransacao = transacao.getData().toLocaleDateString("pt-br", { month: "long", year: "numeric" });
             if (labelAtualGrupoTransacao !== labelGrupoTransacao) {
                 labelAtualGrupoTransacao = labelGrupoTransacao;
                 gruposTransacoes.push({
@@ -44,12 +47,12 @@ export class Conta {
         return new Date();
     }
     registrarTransacao(novaTransacao) {
-        if (novaTransacao.tipoTransacao == TipoTransacao.DEPOSITO) {
-            this.depositar(novaTransacao.valor);
+        if (novaTransacao.getTipoTransacao() == TipoTransacao.DEPOSITO) {
+            this.depositar(novaTransacao.getValorTransacao());
         }
-        else if (novaTransacao.tipoTransacao == TipoTransacao.TRANSFERENCIA || novaTransacao.tipoTransacao == TipoTransacao.PAGAMENTO_BOLETO) {
-            this.debitar(novaTransacao.valor);
-            novaTransacao.valor *= -1;
+        else if (novaTransacao.getTipoTransacao() == TipoTransacao.TRANSFERENCIA || novaTransacao.getTipoTransacao() == TipoTransacao.PAGAMENTO_BOLETO) {
+            this.debitar(novaTransacao.getValorTransacao());
+            novaTransacao.setValorTransacao(novaTransacao.getValorTransacao() * -1);
         }
         else {
             throw new Error("Tipo de Transação é inválido!");

@@ -39,6 +39,9 @@ export class Transacao {
     setTipoTransacao(tipoTransacao) {
         this.tipoTransacao = tipoTransacao;
     }
+    static fromJSON(obj) {
+        return new Transacao(obj.valor, obj.data, obj.tipoTransacao);
+    }
     /*constructor(nome: string) {
         this.titular = nome;
     }*/

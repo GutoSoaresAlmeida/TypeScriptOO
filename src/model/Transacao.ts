@@ -13,9 +13,9 @@ export type GrupoTransacao = {
 
 
 export class Transacao  {
-    tipoTransacao: TipoTransacao;
-    valor: number;
-    data: Date = new Date();
+    private tipoTransacao: TipoTransacao;
+    private valor: number;
+    private data: Date = new Date();
 
     getTransacao() : Transacao[]{
         return JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any) => {
@@ -57,6 +57,10 @@ export class Transacao  {
 
     setTipoTransacao(tipoTransacao: TipoTransacao){
         this.tipoTransacao = tipoTransacao;
+    }
+
+    static fromJSON(obj: any): Transacao {
+        return new Transacao(obj.valor, obj.data, obj.tipoTransacao);
     }
 
     /*constructor(nome: string) {

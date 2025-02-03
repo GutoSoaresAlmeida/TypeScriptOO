@@ -21,10 +21,10 @@ function renderizarExtrato(): void {
             htmlTransacaoItem += `
                 <div class="transacao-item">
                     <div class="transacao-info">
-                        <span class="tipo">${transacao.tipoTransacao}</span>
-                        <strong class="valor">${formatarMoeda(transacao.valor)}</strong>
+                        <span class="tipo">${transacao.getTipoTransacao()}</span>
+                        <strong class="valor">${formatarMoeda(transacao.getValorTransacao())}</strong>
                     </div>
-                    <time class="data">${formatarData(transacao.data, FormatoData.DIA_MES)}</time>
+                    <time class="data">${formatarData(transacao.getData(), FormatoData.DIA_MES)}</time>
                 </div>
             `;
         }
