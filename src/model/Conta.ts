@@ -4,8 +4,11 @@ import { TipoTransacao } from "./Transacao.js";
 import novaTransacao from "./Transacao.js";
 
 export class Conta {
-    nome: string
+    titular: string
+    dataAbertuda: Date;
+    dataEncerramento: Date;
     saldo: number = JSON.parse(localStorage.getItem("saldo")) || 0;
+    limite: number;
     transacoes: Transacao[] = JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any) => {
         if (key === "data") {
             return new Date(value);
@@ -14,9 +17,9 @@ export class Conta {
     }) || [];
     
     constructor(nome: string) {
-        this.nome = nome;
+        this.titular = nome;
     }
-    
+
 
     getGruposTransacoes(): GrupoTransacao[] {
         const gruposTransacoes: GrupoTransacao[] = [];
