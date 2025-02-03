@@ -7,17 +7,21 @@ export class Conta {
     titular: string
     dataAbertuda: Date;
     dataEncerramento: Date;
-    saldo: number = JSON.parse(localStorage.getItem("saldo")) || 0;
+    saldo: number;
     limite: number;
-    transacoes: Transacao[] = JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any) => {
-        if (key === "data") {
-            return new Date(value);
-        }
-        return value;
-    }) || [];
+    transacoes: Transacao[] = []; 
     
     constructor(nome: string) {
         this.titular = nome;
+        this.dataAbertuda = new Date();
+        this.limite = 0;
+        this.saldo = JSON.parse(localStorage.getItem("saldo")) || 0; 
+        this.transacoes = JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any) => {
+            if (key === "data") {
+                return new Date(value);
+            }
+            return value;
+        }) || [];
     }
 
 
@@ -44,7 +48,8 @@ export class Conta {
 
     getSaldo() 
     {
-       return this.saldo;
+        this.saldo = JSON.parse(localStorage.getItem("saldo")) || 0;
+        return this.saldo;
     }
 
 

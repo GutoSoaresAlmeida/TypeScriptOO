@@ -14,7 +14,7 @@ export type GrupoTransacao = {
 
 export class Transacao  {
     tipoTransacao: TipoTransacao;
-    valor: number = 0;
+    valor: number;
     data: Date = new Date();
 
     getTransacao() : Transacao[]{

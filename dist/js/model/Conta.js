@@ -3,16 +3,20 @@ export class Conta {
     titular;
     dataAbertuda;
     dataEncerramento;
-    saldo = JSON.parse(localStorage.getItem("saldo")) || 0;
+    saldo;
     limite;
-    transacoes = JSON.parse(localStorage.getItem("transacoes"), (key, value) => {
-        if (key === "data") {
-            return new Date(value);
-        }
-        return value;
-    }) || [];
+    transacoes = [];
     constructor(nome) {
         this.titular = nome;
+        this.dataAbertuda = new Date();
+        this.limite = 0;
+        this.saldo = JSON.parse(localStorage.getItem("saldo")) || 0;
+        this.transacoes = JSON.parse(localStorage.getItem("transacoes"), (key, value) => {
+            if (key === "data") {
+                return new Date(value);
+            }
+            return value;
+        }) || [];
     }
     getGruposTransacoes() {
         const gruposTransacoes = [];
@@ -33,6 +37,7 @@ export class Conta {
         return gruposTransacoes;
     }
     getSaldo() {
+        this.saldo = JSON.parse(localStorage.getItem("saldo")) || 0;
         return this.saldo;
     }
     getDataAcesso() {

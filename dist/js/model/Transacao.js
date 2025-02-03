@@ -6,7 +6,7 @@ export var TipoTransacao;
 })(TipoTransacao || (TipoTransacao = {}));
 export class Transacao {
     tipoTransacao;
-    valor = 0;
+    valor;
     data = new Date();
     getTransacao() {
         return JSON.parse(localStorage.getItem("transacoes"), (key, value) => {
