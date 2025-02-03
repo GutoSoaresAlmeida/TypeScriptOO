@@ -16,6 +16,7 @@ export class Conta {
     constructor(nome: string) {
         this.nome = nome;
     }
+    
 
     getGruposTransacoes(): GrupoTransacao[] {
         const gruposTransacoes: GrupoTransacao[] = [];
