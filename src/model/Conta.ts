@@ -4,12 +4,12 @@ import { TipoTransacao } from "./Transacao.js";
 
 
 export class Conta {
-    titular: string
-    dataAbertuda: Date;
-    dataEncerramento: Date;
-    saldo: number;
-    limite: number;
-    transacoes: Transacao[] = []; 
+   private titular: string
+   private dataAbertuda: Date;
+   private dataEncerramento: Date;
+   private saldo: number;
+   private limite: number;
+   private transacoes: Transacao[] = []; 
     
     constructor(nome: string) {
         this.titular = nome;
