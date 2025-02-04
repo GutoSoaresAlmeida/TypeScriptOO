@@ -16,6 +16,8 @@ export class Transacao  {
     private tipoTransacao: TipoTransacao;
     private valor: number;
     private data: Date = new Date();
+    private titular_origem : string;
+    private titular_destino : string;
 
     getTransacao() : Transacao[]{
         return JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any) => {
@@ -40,6 +42,15 @@ export class Transacao  {
        return this.data;
     }
 
+    getTitularOrigem(){
+        return this.titular_origem;
+    }
+
+    getTitularDestino(){
+        return this.titular_destino;
+    }
+
+
     setValorTransacao(valor: number){
 
         this.valor = valor;
@@ -58,6 +69,15 @@ export class Transacao  {
     setTipoTransacao(tipoTransacao: TipoTransacao){
         this.tipoTransacao = tipoTransacao;
     }
+
+    setTitularOrigem(){
+        this.titular_origem = this.titular_origem;
+    }
+
+    setTitularDestino(){
+        this.titular_destino = this.titular_destino;
+    }
+
 
     static fromJSON(obj: any): Transacao {
         return new Transacao(obj.valor, obj.data, obj.tipoTransacao);
