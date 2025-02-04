@@ -32,6 +32,7 @@ export class Conta {
             t => Transacao.fromJSON(t)
         );
         
+        
         console.log(listaTransacoes.map(t => t instanceof Transacao)); 
         const transacoesOrdenadas: Transacao[] = listaTransacoes.sort((t1, t2) => t2.getData().getTime() - t1.getData().getTime());
         let labelAtualGrupoTransacao: string = "";
