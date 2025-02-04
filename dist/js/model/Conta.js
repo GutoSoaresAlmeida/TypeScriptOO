@@ -22,7 +22,7 @@ export class Conta {
     getGruposTransacoes() {
         const gruposTransacoes = [];
         //const listaTransacoes2: Transacao[] = structuredClone(this.transacoes);
-        const listaTransacoes = structuredClone(this.transacoes).map(Transacao.fromJSON);
+        const listaTransacoes = structuredClone(this.transacoes).map(t => Transacao.fromJSON(t));
         console.log(listaTransacoes.map(t => t instanceof Transacao));
         const transacoesOrdenadas = listaTransacoes.sort((t1, t2) => t2.getData().getTime() - t1.getData().getTime());
         let labelAtualGrupoTransacao = "";
