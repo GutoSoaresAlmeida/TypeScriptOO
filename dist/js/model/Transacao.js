@@ -54,15 +54,17 @@ export class Transacao {
         this.titular_destino = this.titular_destino;
     }
     static fromJSON(obj) {
-        return new Transacao(obj.valor, obj.data, obj.tipoTransacao);
+        return new Transacao(obj.valor, obj.data, obj.tipoTransacao, obj.titularOrigem, obj.titularDestino);
     }
     /*constructor(nome: string) {
         this.titular = nome;
     }*/
-    constructor(valor, data, tipoTransacao) {
+    constructor(valor, data, tipoTransacao, titularOrigem, titularDestino) {
         this.valor = valor;
         this.data = data;
         this.tipoTransacao = tipoTransacao;
+        this.titular_destino = titularDestino;
+        this.titular_origem = titularOrigem;
     }
 }
 //const novaTransacao = new Transacao();

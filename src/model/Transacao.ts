@@ -80,16 +80,18 @@ export class Transacao  {
 
 
     static fromJSON(obj: any): Transacao {
-        return new Transacao(obj.valor, obj.data, obj.tipoTransacao);
+        return new Transacao(obj.valor, obj.data, obj.tipoTransacao, obj.titularOrigem, obj.titularDestino);
     }
 
     /*constructor(nome: string) {
         this.titular = nome;
     }*/
-   constructor(valor:number, data: Date, tipoTransacao: TipoTransacao){
+   constructor(valor:number, data: Date, tipoTransacao: TipoTransacao, titularOrigem: string, titularDestino: string){
         this.valor = valor;
         this.data = data;
         this.tipoTransacao = tipoTransacao;
+        this.titular_destino = titularDestino;
+        this.titular_origem = titularOrigem;
     }
 }
 

@@ -22,7 +22,7 @@ elementoFormulario.addEventListener("submit", function(event) {
         let valor: number = inputValor.valueAsNumber;
         let data: Date = new Date(inputData.value + " 00:00:00");
 
-        const novaTransacao = new Transacao(valor,data,tipoTransacao);
+        const novaTransacao = new Transacao(valor,data,tipoTransacao,"","");
         
         conta.registrarTransacao(novaTransacao);
         SaldoComponent.atualizar();
